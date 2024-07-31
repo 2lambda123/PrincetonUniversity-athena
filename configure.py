@@ -47,7 +47,6 @@
 #   -implicit_radiation  implicit radiation transport module
 #   -cr                  enable cosmic ray transport
 # ----------------------------------------------------------------------------------------
-
 # Modules
 import argparse
 import glob
