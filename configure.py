@@ -60,20 +60,20 @@ defsfile_output = "src/defs.hpp"
 
 # --- Step 1. Prepare parser, add each of the arguments ------------------
 athena_description = (
-    "Prepare custom Makefile and defs.hpp for compiling Athena++ solver"
-)
+    "Prepare custom Makefile and defs.hpp for compiling Athena++ solver")
 athena_epilog = (
     "Full documentation of options available at "
     "https://github.com/PrincetonUniversity/athena-public-version/wiki/Configuring"
 )
-parser = argparse.ArgumentParser(description=athena_description, epilog=athena_epilog)
+parser = argparse.ArgumentParser(description=athena_description,
+                                 epilog=athena_epilog)
 
 # --prob=[name] argument
 pgen_directory = "src/pgen/"
 # set pgen_choices to list of .cpp files in src/pgen/
 pgen_choices = glob.glob(pgen_directory + "*.cpp")
 # remove 'src/pgen/' prefix and '.cpp' extension from each filename
-pgen_choices = [choice[len(pgen_directory) : -4] for choice in pgen_choices]
+pgen_choices = [choice[len(pgen_directory):-4] for choice in pgen_choices]
 parser.add_argument(
     "--prob",
     default="shock_tube",
@@ -117,7 +117,9 @@ parser.add_argument(
 parser.add_argument(
     "--flux",
     default="default",
-    choices=["default", "hlle", "hllc", "lhllc", "hlld", "lhlld", "roe", "llf"],  # noqa
+    choices=[
+        "default", "hlle", "hllc", "lhllc", "hlld", "lhlld", "roe", "llf"
+    ],  # noqa
     help="select Riemann solver",
 )
 
@@ -125,30 +127,38 @@ parser.add_argument(
 parser.add_argument("--nghost", default="2", help="set number of ghost zones")
 
 # --nscalars=[value] argument
-parser.add_argument("--nscalars", default="0", help="set number of passive scalars")
+parser.add_argument("--nscalars",
+                    default="0",
+                    help="set number of passive scalars")
 
 # --nspecies=[value] argument
-parser.add_argument("--nspecies", default="0", help="set number of chemical species")
+parser.add_argument("--nspecies",
+                    default="0",
+                    help="set number of chemical species")
 
 # -b argument
-parser.add_argument(
-    "-b", action="store_true", default=False, help="enable magnetic field"
-)
+parser.add_argument("-b",
+                    action="store_true",
+                    default=False,
+                    help="enable magnetic field")
 
 # -sts argument
-parser.add_argument(
-    "-sts", action="store_true", default=False, help="enable super-time-stepping"
-)
+parser.add_argument("-sts",
+                    action="store_true",
+                    default=False,
+                    help="enable super-time-stepping")
 
 # -s argument
-parser.add_argument(
-    "-s", action="store_true", default=False, help="enable special relativity"
-)
+parser.add_argument("-s",
+                    action="store_true",
+                    default=False,
+                    help="enable special relativity")
 
 # -g argument
-parser.add_argument(
-    "-g", action="store_true", default=False, help="enable general relativity"
-)
+parser.add_argument("-g",
+                    action="store_true",
+                    default=False,
+                    help="enable general relativity")
 
 # -t argument
 parser.add_argument(
@@ -175,14 +185,16 @@ parser.add_argument(
 )
 
 # -float argument
-parser.add_argument(
-    "-float", action="store_true", default=False, help="enable single precision"
-)
+parser.add_argument("-float",
+                    action="store_true",
+                    default=False,
+                    help="enable single precision")
 
 # -mpi argument
-parser.add_argument(
-    "-mpi", action="store_true", default=False, help="enable parallelization with MPI"
-)
+parser.add_argument("-mpi",
+                    action="store_true",
+                    default=False,
+                    help="enable parallelization with MPI")
 
 # -omp argument
 parser.add_argument(
@@ -201,7 +213,10 @@ parser.add_argument(
 )
 
 # -fft argument
-parser.add_argument("-fft", action="store_true", default=False, help="enable FFT")
+parser.add_argument("-fft",
+                    action="store_true",
+                    default=False,
+                    help="enable FFT")
 
 # --fftw_path argument
 parser.add_argument("--fftw_path", default="", help="path to FFTW libraries")
@@ -239,14 +254,16 @@ parser.add_argument(
 )
 
 # --cvode_path argument
-parser.add_argument(
-    "--cvode_path", type=str, default="", help="path to CVODE libraries"
-)
+parser.add_argument("--cvode_path",
+                    type=str,
+                    default="",
+                    help="path to CVODE libraries")
 
 # -hdf5 argument
-parser.add_argument(
-    "-hdf5", action="store_true", default=False, help="enable HDF5 Output"
-)
+parser.add_argument("-hdf5",
+                    action="store_true",
+                    default=False,
+                    help="enable HDF5 Output")
 
 # -h5double argument
 parser.add_argument(
@@ -276,9 +293,10 @@ parser.add_argument(
 )
 
 # -cosmic ray argument
-parser.add_argument(
-    "-cr", action="store_true", default=False, help="enable cosmic ray transport"
-)
+parser.add_argument("-cr",
+                    action="store_true",
+                    default=False,
+                    help="enable cosmic ray transport")
 
 # The main choices for --cxx flag, using "ctype[-suffix]" formatting, where "ctype" is the
 # major family/suite/group of compilers and "suffix" may represent variants of the
@@ -362,10 +380,9 @@ parser.add_argument(
     "--include",
     default=[],
     action="append",
-    help=(
-        "extra path for included header files (-I<path>); can be specified multiple "
-        "times"
-    ),
+    help=
+    ("extra path for included header files (-I<path>); can be specified multiple "
+     "times"),
 )
 
 # --lib_path=[name] arguments
@@ -373,10 +390,9 @@ parser.add_argument(
     "--lib_path",
     default=[],
     action="append",
-    help=(
-        "extra path for linked library files (-L<path>); can be specified multiple "
-        "times"
-    ),
+    help=
+    ("extra path for linked library files (-L<path>); can be specified multiple "
+     "times"),
 )
 
 # --lib=[name] arguments
@@ -384,7 +400,8 @@ parser.add_argument(
     "--lib",
     default=[],
     action="append",
-    help="name of library to link against (-l<lib>); can be specified multiple times",
+    help=
+    "name of library to link against (-l<lib>); can be specified multiple times",
 )
 
 # Parse command-line inputs
@@ -406,8 +423,7 @@ if args["flux"] == "default":
 # Check Riemann solver compatibility
 if args["flux"] == "hllc" and args["eos"] == "isothermal":
     raise SystemExit(
-        "### CONFIGURE ERROR: HLLC flux cannot be used with isothermal EOS"
-    )
+        "### CONFIGURE ERROR: HLLC flux cannot be used with isothermal EOS")
 if args["flux"] == "hllc" and args["b"]:
     raise SystemExit("### CONFIGURE ERROR: HLLC flux cannot be used with MHD")
 if args["flux"] == "lhllc" and args["eos"] == "isothermal":
@@ -417,92 +433,82 @@ if args["flux"] == "lhllc" and args["eos"] == "isothermal":
 if args["flux"] == "lhllc" and args["b"]:
     raise SystemExit("### CONFIGURE ERROR: LHLLC flux cannot be used with MHD")
 if args["flux"] == "hlld" and not args["b"]:
-    raise SystemExit("### CONFIGURE ERROR: HLLD flux can only be used with MHD")
+    raise SystemExit(
+        "### CONFIGURE ERROR: HLLD flux can only be used with MHD")
 if args["flux"] == "lhlld" and args["eos"] == "isothermal":
     raise SystemExit(
         "### CONFIGURE ERROR: LHLLD flux cannot be used with isothermal EOS"
     )  # noqa
 if args["flux"] == "lhlld" and not args["b"]:
-    raise SystemExit("### CONFIGURE ERROR: LHLLD flux can only be used with MHD")
+    raise SystemExit(
+        "### CONFIGURE ERROR: LHLLD flux can only be used with MHD")
 
 # Check relativity
 if args["s"] and args["g"]:
-    raise SystemExit(
-        "### CONFIGURE ERROR: "
-        + "GR implies SR; the -s option is restricted to pure SR"
-    )
+    raise SystemExit("### CONFIGURE ERROR: " +
+                     "GR implies SR; the -s option is restricted to pure SR")
 if args["t"] and not args["g"]:
-    raise SystemExit("### CONFIGURE ERROR: Frame transformations only apply to GR")
+    raise SystemExit(
+        "### CONFIGURE ERROR: Frame transformations only apply to GR")
 if args["g"] and not args["t"] and args["flux"] not in ("llf", "hlle"):
     raise SystemExit(
         "### CONFIGURE ERROR: Frame transformations required for {0}".format(
-            args["flux"]
-        )
-    )
-if args["g"] and args["coord"] in ("cartesian", "cylindrical", "spherical_polar"):
+            args["flux"]))
+if args["g"] and args["coord"] in ("cartesian", "cylindrical",
+                                   "spherical_polar"):
     raise SystemExit(
         "### CONFIGURE ERROR: GR cannot be used with {0} coordinates".format(
-            args["coord"]
-        )
-    )
+            args["coord"]))
 if not args["g"] and args["coord"] not in (
-    "cartesian",
-    "cylindrical",
-    "spherical_polar",
+        "cartesian",
+        "cylindrical",
+        "spherical_polar",
 ):
-    raise SystemExit(
-        "### CONFIGURE ERROR: " + args["coord"] + " coordinates only apply to GR"
-    )
+    raise SystemExit("### CONFIGURE ERROR: " + args["coord"] +
+                     " coordinates only apply to GR")
 if args["eos"] == "isothermal":
     if args["s"] or args["g"]:
-        raise SystemExit(
-            "### CONFIGURE ERROR: " + "Isothermal EOS is incompatible with relativity"
-        )
+        raise SystemExit("### CONFIGURE ERROR: " +
+                         "Isothermal EOS is incompatible with relativity")
 if args["eos"][:8] == "general/":
     if args["s"] or args["g"]:
-        raise SystemExit(
-            "### CONFIGURE ERROR: " + "General EOS is incompatible with relativity"
-        )
+        raise SystemExit("### CONFIGURE ERROR: " +
+                         "General EOS is incompatible with relativity")
     if args["flux"] not in ["hllc", "hlld"]:
-        raise SystemExit(
-            "### CONFIGURE ERROR: "
-            + "General EOS is incompatible with flux "
-            + args["flux"]
-        )
+        raise SystemExit("### CONFIGURE ERROR: " +
+                         "General EOS is incompatible with flux " +
+                         args["flux"])
 
 if args["chemistry"] is None and args["chem_ode_solver"] is not None:
     raise SystemExit(
-        "### CONFIGURE ERROR: must choose chemistry network for ode solver."
-    )
+        "### CONFIGURE ERROR: must choose chemistry network for ode solver.")
 
 if args["chemistry"] is not None and args["chem_ode_solver"] is None:
-    raise SystemExit("### CONFIGURE ERROR: must choose ode solver for chemistry.")
+    raise SystemExit(
+        "### CONFIGURE ERROR: must choose ode solver for chemistry.")
 
 if args["chemistry"] == "kida" and args["kida_rates"] is None:
-    raise SystemExit("### CONFIGURE ERROR: must provide rates for kida chemistry.")
-
-if args["chem_radiation"] == "six_ray" and (
-    args["chemistry"] != "gow17" and args["chemistry"] != "kida"
-):
     raise SystemExit(
-        "### CONFIGURE ERROR: six ray radiation"
-        + "only compatible with gow17 or kida chemistry enabled."
-    )
+        "### CONFIGURE ERROR: must provide rates for kida chemistry.")
+
+if args["chem_radiation"] == "six_ray" and (args["chemistry"] != "gow17"
+                                            and args["chemistry"] != "kida"):
+    raise SystemExit("### CONFIGURE ERROR: six ray radiation" +
+                     "only compatible with gow17 or kida chemistry enabled.")
 
 if args["chem_ode_solver"] == "cvode" and args["cvode_path"] == "":
-    raise SystemExit("### CONFIGURE ERROR: must provide library path to cvode.")
+    raise SystemExit(
+        "### CONFIGURE ERROR: must provide library path to cvode.")
 
 if args["g"] and (args["nr_radiation"] or args["implicit_radiation"]):
     raise SystemExit(
-        "### CONFIGURE ERROR: "
-        + " GR is incompatible with nr_radiation or implicit_radiation"
-    )
+        "### CONFIGURE ERROR: " +
+        " GR is incompatible with nr_radiation or implicit_radiation")
 
 if args["nr_radiation"] and args["implicit_radiation"]:
     raise SystemExit(
-        "### CONFIGURE ERROR: "
-        + " nr_radiation and implicit_radiation cannot be used together"
-    )
+        "### CONFIGURE ERROR: " +
+        " nr_radiation and implicit_radiation cannot be used together")
 
 # --- Step 3. Set definitions and Makefile options based on above argument
 
@@ -515,7 +521,8 @@ makefile_options["LOADER_FLAGS"] = ""
 definitions["PROBLEM"] = makefile_options["PROBLEM_FILE"] = args["prob"]
 
 # --coord=[name] argument
-definitions["COORDINATE_SYSTEM"] = makefile_options["COORDINATES_FILE"] = args["coord"]
+definitions["COORDINATE_SYSTEM"] = makefile_options["COORDINATES_FILE"] = args[
+    "coord"]
 
 # --eos=[name] argument
 definitions["NON_BAROTROPIC_EOS"] = "0" if args["eos"] == "isothermal" else "1"
@@ -601,7 +608,6 @@ if args["g"]:
     if not args["t"]:
         makefile_options["RSOLVER_FILE"] += "_no_transform"
 
-
 # -radiation argument
 definitions["NRAD_VARIABLES"] = "0"
 
@@ -625,12 +631,12 @@ if args["cr"]:
 else:
     definitions["CR_ENABLED"] = "0"
 
-
 # --cxx=[name] argument
 if args["cxx"] == "g++":
     # GCC is C++11 feature-complete since v4.8.1 (2013-05-31)
     definitions["COMPILER_CHOICE"] = "g++"
-    definitions["COMPILER_COMMAND"] = makefile_options["COMPILER_COMMAND"] = "g++"
+    definitions["COMPILER_COMMAND"] = makefile_options[
+        "COMPILER_COMMAND"] = "g++"
     makefile_options["PREPROCESSOR_FLAGS"] = ""
     makefile_options["COMPILER_FLAGS"] = "-O3 -std=c++11"
     makefile_options["LINKER_FLAGS"] = ""
@@ -638,7 +644,8 @@ if args["cxx"] == "g++":
 if args["cxx"] == "g++-simd":
     # GCC version >= 4.9, for OpenMP 4.0; version >= 6.1 for OpenMP 4.5 support
     definitions["COMPILER_CHOICE"] = "g++-simd"
-    definitions["COMPILER_COMMAND"] = makefile_options["COMPILER_COMMAND"] = "g++"
+    definitions["COMPILER_COMMAND"] = makefile_options[
+        "COMPILER_COMMAND"] = "g++"
     makefile_options["PREPROCESSOR_FLAGS"] = ""
     makefile_options["COMPILER_FLAGS"] = (
         "-O3 -std=c++11 -fopenmp-simd -fwhole-program -flto -ffast-math "
@@ -654,14 +661,14 @@ if args["cxx"] == "g++-simd":
 if args["cxx"] == "icpx":
     # Next-gen LLVM-based Intel oneAPI DPC++/C++ Compiler
     definitions["COMPILER_CHOICE"] = "icpx"
-    definitions["COMPILER_COMMAND"] = makefile_options["COMPILER_COMMAND"] = "icpx"
+    definitions["COMPILER_COMMAND"] = makefile_options[
+        "COMPILER_COMMAND"] = "icpx"
     makefile_options["PREPROCESSOR_FLAGS"] = ""
     # ICX drivers icx and icpx will accept ICC Classic Compiler options or Clang*/LLVM
     # Compiler options
     makefile_options["COMPILER_FLAGS"] = (
         "-O3 -std=c++11 -ipo -xhost -qopenmp-simd "
-        "-Wno-tautological-constant-compare -Wno-array-bounds"
-    )
+        "-Wno-tautological-constant-compare -Wno-array-bounds")
     # Currently unsupported, but "options to be supported" according to icpx
     # -qnextgen-diag: '-inline-forceinline -qopt-prefetch=4 '
     makefile_options["LINKER_FLAGS"] = ""
@@ -669,7 +676,8 @@ if args["cxx"] == "icpx":
 if args["cxx"] == "icpc":
     # ICC is C++11 feature-complete since v15.0 (2014-08-26)
     definitions["COMPILER_CHOICE"] = "icpc"
-    definitions["COMPILER_COMMAND"] = makefile_options["COMPILER_COMMAND"] = "icpc"
+    definitions["COMPILER_COMMAND"] = makefile_options[
+        "COMPILER_COMMAND"] = "icpc"
     makefile_options["PREPROCESSOR_FLAGS"] = ""
     makefile_options["COMPILER_FLAGS"] = (
         "-O3 -std=c++11 -ipo -xhost -inline-forceinline -qopenmp-simd -qopt-prefetch=4 "
@@ -683,34 +691,36 @@ if args["cxx"] == "icpc-debug":
     # Disable IPO, forced inlining, and fast math. Enable vectorization reporting.
     # Useful for testing symmetry, SIMD-enabled functions and loops with OpenMP 4.5
     definitions["COMPILER_CHOICE"] = "icpc"
-    definitions["COMPILER_COMMAND"] = makefile_options["COMPILER_COMMAND"] = "icpc"
+    definitions["COMPILER_COMMAND"] = makefile_options[
+        "COMPILER_COMMAND"] = "icpc"
     makefile_options["PREPROCESSOR_FLAGS"] = ""
     makefile_options["COMPILER_FLAGS"] = (
         "-O3 -std=c++11 -xhost -qopenmp-simd -fp-model precise -qopt-prefetch=4 "
         "-qopt-report=5 -qopt-report-phase=openmp,vec -g -qoverride-limits "
-        "-diag-disable=10441"
-    )
+        "-diag-disable=10441")
     makefile_options["LINKER_FLAGS"] = ""
     makefile_options["LIBRARY_FLAGS"] = ""
 if args["cxx"] == "icpc-phi":
     # Cross-compile for Intel Xeon Phi x200 KNL series (unique AVX-512ER and AVX-512FP)
     # -xMIC-AVX512: generate AVX-512F, AVX-512CD, AVX-512ER and AVX-512FP
     definitions["COMPILER_CHOICE"] = "icpc"
-    definitions["COMPILER_COMMAND"] = makefile_options["COMPILER_COMMAND"] = "icpc"
+    definitions["COMPILER_COMMAND"] = makefile_options[
+        "COMPILER_COMMAND"] = "icpc"
     makefile_options["PREPROCESSOR_FLAGS"] = ""
     makefile_options["COMPILER_FLAGS"] = (
         "-O3 -std=c++11 -ipo -xMIC-AVX512 -inline-forceinline -qopenmp-simd "
-        "-qopt-prefetch=4 -qoverride-limits"
-    )
+        "-qopt-prefetch=4 -qoverride-limits")
     makefile_options["LINKER_FLAGS"] = ""
     makefile_options["LIBRARY_FLAGS"] = ""
 if args["cxx"] == "cray":
     # Cray Compiling Environment 8.4 (2015-09-24) introduces C++11 feature completeness
     # (except "alignas"). v8.6 is C++14 feature-complete
     definitions["COMPILER_CHOICE"] = "cray"
-    definitions["COMPILER_COMMAND"] = makefile_options["COMPILER_COMMAND"] = "CC"
+    definitions["COMPILER_COMMAND"] = makefile_options[
+        "COMPILER_COMMAND"] = "CC"
     makefile_options["PREPROCESSOR_FLAGS"] = ""
-    makefile_options["COMPILER_FLAGS"] = "-O3 -h std=c++11 -h aggress -h vector3 -hfp3"
+    makefile_options[
+        "COMPILER_FLAGS"] = "-O3 -h std=c++11 -h aggress -h vector3 -hfp3"
     makefile_options["LINKER_FLAGS"] = "-hwp -hpl=obj/lib"
     makefile_options["LIBRARY_FLAGS"] = "-lm"
 if args["cxx"] == "bgxlc++":
@@ -723,20 +733,21 @@ if args["cxx"] == "bgxlc++":
     #   1586-267:  Inlining of specified subprogram failed due to the presence of a C++
     #                exception handler
     definitions["COMPILER_CHOICE"] = "bgxlc++"
-    definitions["COMPILER_COMMAND"] = makefile_options["COMPILER_COMMAND"] = "bgxlc++"
+    definitions["COMPILER_COMMAND"] = makefile_options[
+        "COMPILER_COMMAND"] = "bgxlc++"
     makefile_options["PREPROCESSOR_FLAGS"] = ""
     makefile_options["COMPILER_FLAGS"] = (
         "-O3 -qhot=level=1:vector -qinline=level=5:auto -qipa=level=1:noobject"
         " -qstrict=subnormals -qmaxmem=150000 -qlanglvl=extended0x -qsuppress=1500-036"
         " -qsuppress=1540-1401 -qsuppress=1586-083 -qsuppress=1586-233"
-        " -qsuppress=1586-267"
-    )
+        " -qsuppress=1586-267")
     makefile_options["LINKER_FLAGS"] = makefile_options["COMPILER_FLAGS"]
     makefile_options["LIBRARY_FLAGS"] = ""
 if args["cxx"] == "clang++":
     # Clang is C++11 feature-complete since v3.3 (2013-06-17)
     definitions["COMPILER_CHOICE"] = "clang++"
-    definitions["COMPILER_COMMAND"] = makefile_options["COMPILER_COMMAND"] = "clang++"
+    definitions["COMPILER_COMMAND"] = makefile_options[
+        "COMPILER_COMMAND"] = "clang++"
     makefile_options["PREPROCESSOR_FLAGS"] = ""
     makefile_options["COMPILER_FLAGS"] = "-O3 -std=c++11"
     makefile_options["LINKER_FLAGS"] = ""
@@ -745,7 +756,8 @@ if args["cxx"] == "clang++-simd":
     # LLVM/Clang version >= 3.9 for most of OpenMP 4.0 and 4.5 (still incomplete; no
     # offloading, target/declare simd directives). OpenMP 3.1 fully supported in LLVM 3.7
     definitions["COMPILER_CHOICE"] = "clang++-simd"
-    definitions["COMPILER_COMMAND"] = makefile_options["COMPILER_COMMAND"] = "clang++"
+    definitions["COMPILER_COMMAND"] = makefile_options[
+        "COMPILER_COMMAND"] = "clang++"
     makefile_options["PREPROCESSOR_FLAGS"] = ""
     makefile_options["COMPILER_FLAGS"] = "-O3 -std=c++11 -fopenmp-simd"
     makefile_options["LINKER_FLAGS"] = ""
@@ -753,7 +765,8 @@ if args["cxx"] == "clang++-simd":
 if args["cxx"] == "clang++-apple":
     # Apple LLVM/Clang: forked version of the open-source LLVM project bundled in macOS
     definitions["COMPILER_CHOICE"] = "clang++-apple"
-    definitions["COMPILER_COMMAND"] = makefile_options["COMPILER_COMMAND"] = "clang++"
+    definitions["COMPILER_COMMAND"] = makefile_options[
+        "COMPILER_COMMAND"] = "clang++"
     makefile_options["PREPROCESSOR_FLAGS"] = ""
     makefile_options["COMPILER_FLAGS"] = "-O3 -std=c++11"
     makefile_options["LINKER_FLAGS"] = ""
@@ -761,16 +774,13 @@ if args["cxx"] == "clang++-apple":
 
 # --chemistry=[network] argument
 makefile_options["CHEMISTRY_FILE"] = (
-    "src/chemistry/network_wrapper.cpp src/chemistry/utils/*.cpp"
-)
+    "src/chemistry/network_wrapper.cpp src/chemistry/utils/*.cpp")
 if args["chemistry"] is not None:
     definitions["CHEMISTRY_ENABLED"] = "1"
-    definitions["CHEMNETWORK_HEADER"] = (
-        "../chemistry/network/" + args["chemistry"] + ".hpp"
-    )
-    makefile_options["CHEMNET_FILE"] = (
-        "src/chemistry/network/" + args["chemistry"] + ".cpp"
-    )
+    definitions["CHEMNETWORK_HEADER"] = ("../chemistry/network/" +
+                                         args["chemistry"] + ".hpp")
+    makefile_options["CHEMNET_FILE"] = ("src/chemistry/network/" +
+                                        args["chemistry"] + ".cpp")
     # specify the number of species for each network
     if args["chemistry"] == "gow17":
         definitions["NUMBER_CHEMICAL_SPECIES"] = "12"
@@ -786,34 +796,27 @@ else:
 
 # check number of species and scalars
 if definitions["NUMBER_PASSIVE_SCALARS"] == "0":
-    definitions["NUMBER_PASSIVE_SCALARS"] = definitions["NUMBER_CHEMICAL_SPECIES"]
+    definitions["NUMBER_PASSIVE_SCALARS"] = definitions[
+        "NUMBER_CHEMICAL_SPECIES"]
 elif int(definitions["NUMBER_PASSIVE_SCALARS"]) < int(
-    definitions["NUMBER_CHEMICAL_SPECIES"]
-):
-    raise SystemExit(
-        "### CONFIGURE ERROR: number of passive scalars ({:s})".format(
-            definitions["NUMBER_PASSIVE_SCALARS"]
-        )
-        + " less than the number of chemical species ({:s})!".format(
-            definitions["NUMBER_CHEMICAL_SPECIES"]
-        )
-    )
+        definitions["NUMBER_CHEMICAL_SPECIES"]):
+    raise SystemExit("### CONFIGURE ERROR: number of passive scalars ({:s})".
+                     format(definitions["NUMBER_PASSIVE_SCALARS"]) +
+                     " less than the number of chemical species ({:s})!".
+                     format(definitions["NUMBER_CHEMICAL_SPECIES"]))
 
 # --kida_rates=[rates] argument
 if args["kida_rates"] is not None:
     if args["chemistry"] == "kida":
         makefile_options["CHEMNET_FILE"] += (
-            " src/chemistry/network/kida_network_files/"
-            + args["kida_rates"]
-            + "/kida_"
-            + args["kida_rates"]
-            + ".cpp"
-        )
+            " src/chemistry/network/kida_network_files/" + args["kida_rates"] +
+            "/kida_" + args["kida_rates"] + ".cpp")
 
 # --chem_ode_solver=[solver] argument
 if args["chem_ode_solver"] == "cvode":
     definitions["CVODE_OPTION"] = "CVODE"
-    makefile_options["LIBRARY_FLAGS"] += " -lsundials_cvode -lsundials_nvecserial"
+    makefile_options[
+        "LIBRARY_FLAGS"] += " -lsundials_cvode -lsundials_nvecserial"
 else:
     definitions["CVODE_OPTION"] = "NO_CVODE"
 if args["chem_ode_solver"] is not None:
@@ -823,9 +826,11 @@ else:
 
 # --cvode_path=[path] argument
 if args["cvode_path"] != "":
-    makefile_options["PREPROCESSOR_FLAGS"] += "-I%s/include" % args["cvode_path"]
+    makefile_options[
+        "PREPROCESSOR_FLAGS"] += "-I%s/include" % args["cvode_path"]
     makefile_options["LINKER_FLAGS"] += "-L%s/lib" % args["cvode_path"]
-    makefile_options["LINKER_FLAGS"] += " -Wl,-rpath," + "%s/lib" % args["cvode_path"]
+    makefile_options[
+        "LINKER_FLAGS"] += " -Wl,-rpath," + "%s/lib" % args["cvode_path"]
 
 # --chem_radiation=[chem_radiation] argument
 if args["chem_radiation"] is not None:
@@ -848,16 +853,11 @@ if args["debug"]:
     definitions["DEBUG_OPTION"] = "1"
     # Completely replace the --cxx= sets of default compiler flags, disable optimization,
     # and emit debug symbols in the compiled binaries
-    if (
-        args["cxx"] == "g++"
-        or args["cxx"] == "g++-simd"
-        or args["cxx"] == "icpx"
-        or args["cxx"] == "icpc"
-        or args["cxx"] == "icpc-debug"
-        or args["cxx"] == "clang++"
-        or args["cxx"] == "clang++-simd"
-        or args["cxx"] == "clang++-apple"
-    ):
+    if (args["cxx"] == "g++" or args["cxx"] == "g++-simd"
+            or args["cxx"] == "icpx" or args["cxx"] == "icpc"
+            or args["cxx"] == "icpc-debug" or args["cxx"] == "clang++"
+            or args["cxx"] == "clang++-simd"
+            or args["cxx"] == "clang++-apple"):
         makefile_options["COMPILER_FLAGS"] = "-O0 --std=c++11 -g"  # -Og
     if args["cxx"] == "cray":
         makefile_options["COMPILER_FLAGS"] = "-O0 -h std=c++11"
@@ -877,24 +877,15 @@ if args["coverage"]:
     if args["cxx"] == "g++" or args["cxx"] == "g++-simd":
         makefile_options["COMPILER_FLAGS"] += (
             " -O0 -fprofile-arcs -ftest-coverage"
-            " -fno-inline -fno-exceptions -fno-elide-constructors"
-        )
-    if (
-        args["cxx"] == "icpc"
-        or args["cxx"] == "icpc-debug"
-        or args["cxx"] == "icpx"
-        or args["cxx"] == "icpc-phi"
-    ):
+            " -fno-inline -fno-exceptions -fno-elide-constructors")
+    if (args["cxx"] == "icpc" or args["cxx"] == "icpc-debug"
+            or args["cxx"] == "icpx" or args["cxx"] == "icpc-phi"):
         makefile_options["COMPILER_FLAGS"] += " -O0 -prof-gen=srcpos"
-    if (
-        args["cxx"] == "clang++"
-        or args["cxx"] == "clang++-simd"
-        or args["cxx"] == "clang++-apple"
-    ):
+    if (args["cxx"] == "clang++" or args["cxx"] == "clang++-simd"
+            or args["cxx"] == "clang++-apple"):
         # Clang's "source-based" code coverage feature to produces .profraw output
         makefile_options[
-            "COMPILER_FLAGS"
-        ] += " -O0 -fprofile-instr-generate -fcoverage-mapping"  # use --coverage to produce GCC-compatible .gcno, .gcda output for gcov
+            "COMPILER_FLAGS"] += " -O0 -fprofile-instr-generate -fcoverage-mapping"  # use --coverage to produce GCC-compatible .gcno, .gcda output for gcov
     if args["cxx"] == "cray" or args["cxx"] == "bgxlc++":
         raise SystemExit(
             "### CONFIGURE ERROR: No code coverage avaialbe for selected compiler!"
@@ -907,9 +898,8 @@ else:
 
 # --ccmd=[name] argument
 if args["ccmd"] is not None:
-    definitions["COMPILER_COMMAND"] = makefile_options["COMPILER_COMMAND"] = args[
-        "ccmd"
-    ]
+    definitions["COMPILER_COMMAND"] = makefile_options[
+        "COMPILER_COMMAND"] = args["ccmd"]
 
 # --gcovcmd=[name] argument (only modifies Makefile target)
 if args["gcovcmd"] is not None:
@@ -920,55 +910,40 @@ else:
 # -mpi argument
 if args["mpi"]:
     definitions["MPI_OPTION"] = "MPI_PARALLEL"
-    if (
-        args["cxx"] == "g++"
-        or args["cxx"] == "icpc"
-        or args["cxx"] == "icpc-debug"
-        or args["cxx"] == "icpx"
-        or args["cxx"] == "icpc-phi"
-        or args["cxx"] == "g++-simd"
-        or args["cxx"] == "clang++"
-        or args["cxx"] == "clang++-simd"
-        or args["cxx"] == "clang++-apple"
-    ):
-        definitions["COMPILER_COMMAND"] = makefile_options["COMPILER_COMMAND"] = (
-            "mpicxx"
-        )
+    if (args["cxx"] == "g++" or args["cxx"] == "icpc"
+            or args["cxx"] == "icpc-debug" or args["cxx"] == "icpx"
+            or args["cxx"] == "icpc-phi" or args["cxx"] == "g++-simd"
+            or args["cxx"] == "clang++" or args["cxx"] == "clang++-simd"
+            or args["cxx"] == "clang++-apple"):
+        definitions["COMPILER_COMMAND"] = makefile_options[
+            "COMPILER_COMMAND"] = ("mpicxx")
     if args["cxx"] == "cray":
         makefile_options["COMPILER_FLAGS"] += " -h mpi1"
     if args["cxx"] == "bgxlc++":
-        definitions["COMPILER_COMMAND"] = makefile_options["COMPILER_COMMAND"] = (
-            "mpixlcxx"  # noqa
-        )
+        definitions["COMPILER_COMMAND"] = makefile_options[
+            "COMPILER_COMMAND"] = (
+                "mpixlcxx"  # noqa
+            )
     # --mpiccmd=[name] argument
     if args["mpiccmd"] is not None:
-        definitions["COMPILER_COMMAND"] = makefile_options["COMPILER_COMMAND"] = args[
-            "mpiccmd"
-        ]  # noqa
+        definitions["COMPILER_COMMAND"] = makefile_options[
+            "COMPILER_COMMAND"] = args["mpiccmd"]  # noqa
 else:
     definitions["MPI_OPTION"] = "NOT_MPI_PARALLEL"
 
 # -omp argument
 if args["omp"]:
     definitions["OPENMP_OPTION"] = "OPENMP_PARALLEL"
-    if (
-        args["cxx"] == "g++"
-        or args["cxx"] == "g++-simd"
-        or args["cxx"] == "clang++"
-        or args["cxx"] == "clang++-simd"
-    ):
+    if (args["cxx"] == "g++" or args["cxx"] == "g++-simd"
+            or args["cxx"] == "clang++" or args["cxx"] == "clang++-simd"):
         makefile_options["COMPILER_FLAGS"] += " -fopenmp"
     if args["cxx"] == "clang++-apple":
         # Apple Clang disables the front end OpenMP driver interface; enable it via the
         # preprocessor. Must install LLVM's OpenMP runtime library libomp beforehand
         makefile_options["COMPILER_FLAGS"] += " -Xpreprocessor -fopenmp"
         makefile_options["LIBRARY_FLAGS"] += " -lomp"
-    if (
-        args["cxx"] == "icpc"
-        or args["cxx"] == "icpc-debug"
-        or args["cxx"] == "icpc-phi"
-        or args["cxx"] == "icpx"
-    ):
+    if (args["cxx"] == "icpc" or args["cxx"] == "icpc-debug"
+            or args["cxx"] == "icpc-phi" or args["cxx"] == "icpx"):
         makefile_options["COMPILER_FLAGS"] += " -qopenmp"
     if args["cxx"] == "cray":
         makefile_options["COMPILER_FLAGS"] += " -homp"
@@ -981,11 +956,8 @@ else:
     definitions["OPENMP_OPTION"] = "NOT_OPENMP_PARALLEL"
     if args["cxx"] == "cray":
         makefile_options["COMPILER_FLAGS"] += " -hnoomp"
-    if (
-        args["cxx"] == "icpc"
-        or args["cxx"] == "icpc-debug"
-        or args["cxx"] == "icpc-phi"
-    ):
+    if (args["cxx"] == "icpc" or args["cxx"] == "icpc-debug"
+            or args["cxx"] == "icpc-phi"):
         # suppressed messages:
         #   3180: pragma omp not recognized
         makefile_options["COMPILER_FLAGS"] += " -diag-disable 3180"
@@ -1003,7 +975,6 @@ else:
     if args["grav"] == "mg":
         definitions["SELF_GRAVITY_ENABLED"] = "2"
 
-
 # -fft argument
 makefile_options["MPIFFT_FILE"] = " "
 definitions["FFT_OPTION"] = "NO_FFT"
@@ -1011,9 +982,9 @@ if args["fft"]:
     definitions["FFT_OPTION"] = "FFT"
     if args["fftw_path"] != "":
         makefile_options["PREPROCESSOR_FLAGS"] += " -I{0}/include".format(
-            args["fftw_path"]
-        )
-        makefile_options["LINKER_FLAGS"] += " -L{0}/lib".format(args["fftw_path"])
+            args["fftw_path"])
+        makefile_options["LINKER_FLAGS"] += " -L{0}/lib".format(
+            args["fftw_path"])
     if args["omp"]:
         makefile_options["LIBRARY_FLAGS"] += " -lfftw3_omp"
     if args["mpi"]:
@@ -1026,32 +997,24 @@ if args["hdf5"]:
 
     if args["hdf5_path"] != "":
         makefile_options["PREPROCESSOR_FLAGS"] += " -I{0}/include".format(
-            args["hdf5_path"]
-        )
-        makefile_options["LINKER_FLAGS"] += " -L{0}/lib".format(args["hdf5_path"])
-    if (
-        args["cxx"] == "g++"
-        or args["cxx"] == "g++-simd"
-        or args["cxx"] == "cray"
-        or args["cxx"] == "icpc"
-        or args["cxx"] == "icpx"
-        or args["cxx"] == "icpc-debug"
-        or args["cxx"] == "icpc-phi"
-        or args["cxx"] == "clang++"
-        or args["cxx"] == "clang++-simd"
-        or args["cxx"] == "clang++-apple"
-    ):
+            args["hdf5_path"])
+        makefile_options["LINKER_FLAGS"] += " -L{0}/lib".format(
+            args["hdf5_path"])
+    if (args["cxx"] == "g++" or args["cxx"] == "g++-simd"
+            or args["cxx"] == "cray" or args["cxx"] == "icpc"
+            or args["cxx"] == "icpx" or args["cxx"] == "icpc-debug"
+            or args["cxx"] == "icpc-phi" or args["cxx"] == "clang++"
+            or args["cxx"] == "clang++-simd"
+            or args["cxx"] == "clang++-apple"):
         makefile_options["LIBRARY_FLAGS"] += " -lhdf5"
     if args["cxx"] == "bgxlc++":
         makefile_options["PREPROCESSOR_FLAGS"] += (
             " -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_BSD_SOURCE"
             " -I/soft/libraries/hdf5/1.10.0/cnk-xl/current/include"
-            " -I/bgsys/drivers/ppcfloor/comm/include"
-        )
+            " -I/bgsys/drivers/ppcfloor/comm/include")
         makefile_options["LINKER_FLAGS"] += (
             " -L/soft/libraries/hdf5/1.10.0/cnk-xl/current/lib"
-            " -L/soft/libraries/alcf/current/xl/ZLIB/lib"
-        )
+            " -L/soft/libraries/alcf/current/xl/ZLIB/lib")
         makefile_options["LIBRARY_FLAGS"] += " -lhdf5 -lz -lm"
 else:
     definitions["HDF5_OPTION"] = "NO_HDF5OUTPUT"
@@ -1079,12 +1042,10 @@ for library_name in args["lib"]:
     makefile_options["LIBRARY_FLAGS"] += " -l" + library_name
 
 # Assemble all flags of any sort given to compiler
-definitions["COMPILER_FLAGS"] = " ".join(
-    [
-        makefile_options[opt + "_FLAGS"]
-        for opt in ["PREPROCESSOR", "COMPILER", "LINKER", "LIBRARY"]
-    ]
-)
+definitions["COMPILER_FLAGS"] = " ".join([
+    makefile_options[opt + "_FLAGS"]
+    for opt in ["PREPROCESSOR", "COMPILER", "LINKER", "LIBRARY"]
+])
 
 # --- Step 4. Create new files, finish up --------------------------------
 
@@ -1134,9 +1095,8 @@ def output_config(opt_descr, opt_choice, filehandle=None):
     first_col_width = 32
     first_col_indent = 2
     descr_len = len(opt_descr)
-    right_pad_len = first_col_width - (
-        descr_len + first_col_indent + 2
-    )  # include colon
+    right_pad_len = first_col_width - (descr_len + first_col_indent + 2
+                                       )  # include colon
     right_pad = right_pad_len * " " if right_pad_len >= 0 else ""
     line_str = first_col_indent * " " + opt_descr + ": " + right_pad + opt_choice
     print(line_str)
@@ -1158,22 +1118,21 @@ output_config("Equation of state", args["eos"], flog)
 output_config("Riemann solver", args["flux"], flog)
 output_config("Magnetic fields", ("ON" if args["b"] else "OFF"), flog)
 output_config("Number of scalars", definitions["NUMBER_PASSIVE_SCALARS"], flog)
-output_config(
-    "Number of chemical species", definitions["NUMBER_CHEMICAL_SPECIES"], flog
-)
+output_config("Number of chemical species",
+              definitions["NUMBER_CHEMICAL_SPECIES"], flog)
 output_config("Special relativity", ("ON" if args["s"] else "OFF"), flog)
 output_config("General relativity", ("ON" if args["g"] else "OFF"), flog)
-output_config("Radiative Transfer", ("ON" if args["nr_radiation"] else "OFF"), flog)
-output_config(
-    "Implicit Radiation", ("ON" if args["implicit_radiation"] else "OFF"), flog
-)
+output_config("Radiative Transfer", ("ON" if args["nr_radiation"] else "OFF"),
+              flog)
+output_config("Implicit Radiation",
+              ("ON" if args["implicit_radiation"] else "OFF"), flog)
 output_config("Cosmic Ray Transport", ("ON" if args["cr"] else "OFF"), flog)
 output_config("Frame transformations", ("ON" if args["t"] else "OFF"), flog)
 output_config("Self-Gravity", self_grav_string, flog)
 output_config("Super-Time-Stepping", ("ON" if args["sts"] else "OFF"), flog)
-output_config(
-    "Chemistry", (args["chemistry"] if args["chemistry"] is not None else "OFF"), flog
-)
+output_config("Chemistry",
+              (args["chemistry"] if args["chemistry"] is not None else "OFF"),
+              flog)
 output_config(
     "KIDA rates",
     (args["kida_rates"] if args["kida_rates"] is not None else "OFF"),
@@ -1186,34 +1145,34 @@ output_config(
 )
 output_config(
     "chem_ode_solver",
-    (args["chem_ode_solver"] if args["chem_ode_solver"] is not None else "OFF"),
+    (args["chem_ode_solver"]
+     if args["chem_ode_solver"] is not None else "OFF"),
     flog,
 )
 output_config("Debug flags", ("ON" if args["debug"] else "OFF"), flog)
-output_config("Code coverage flags", ("ON" if args["coverage"] else "OFF"), flog)
+output_config("Code coverage flags", ("ON" if args["coverage"] else "OFF"),
+              flog)
 output_config(
     "Linker flags",
     makefile_options["LINKER_FLAGS"] + " " + makefile_options["LIBRARY_FLAGS"],
     flog,
 )
-output_config(
-    "Floating-point precision", ("single" if args["float"] else "double"), flog
-)
+output_config("Floating-point precision",
+              ("single" if args["float"] else "double"), flog)
 output_config("Number of ghost cells", args["nghost"], flog)
 output_config("MPI parallelism", ("ON" if args["mpi"] else "OFF"), flog)
 output_config("OpenMP parallelism", ("ON" if args["omp"] else "OFF"), flog)
 output_config("FFT", ("ON" if args["fft"] else "OFF"), flog)
 output_config("HDF5 output", ("ON" if args["hdf5"] else "OFF"), flog)
 if args["hdf5"]:
-    output_config("HDF5 precision", ("double" if args["h5double"] else "single"), flog)
+    output_config("HDF5 precision",
+                  ("double" if args["h5double"] else "single"), flog)
 output_config("Compiler", args["cxx"], flog)
 output_config(
     "Compilation command",
-    makefile_options["COMPILER_COMMAND"]
-    + " "
-    + makefile_options["PREPROCESSOR_FLAGS"]
-    + " "
-    + makefile_options["COMPILER_FLAGS"],
+    makefile_options["COMPILER_COMMAND"] + " " +
+    makefile_options["PREPROCESSOR_FLAGS"] + " " +
+    makefile_options["COMPILER_FLAGS"],
     flog,
 )
 
