@@ -303,6 +303,11 @@ cxx_choices = [
 
 
 def c_to_cpp(arg):
+    """
+
+    :param arg: 
+
+    """
     arg = arg.replace("gcc", "g++", 1)
     arg = arg.replace("icc", "icpc", 1)
     arg = arg.replace("icx", "icpx", 1)
@@ -1120,6 +1125,13 @@ elif args["grav"] == "mg":
 
 
 def output_config(opt_descr, opt_choice, filehandle=None):
+    """
+
+    :param opt_descr: 
+    :param opt_choice: 
+    :param filehandle:  (Default value = None)
+
+    """
     first_col_width = 32
     first_col_indent = 2
     descr_len = len(opt_descr)
