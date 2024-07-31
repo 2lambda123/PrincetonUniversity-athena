@@ -53,7 +53,6 @@ import argparse
 import glob
 import re
 
-
 # Set template and output filenames
 makefile_input = "Makefile.in"
 makefile_output = "Makefile"
