@@ -304,7 +304,7 @@ cxx_choices = [
 def c_to_cpp(arg):
     """
 
-    :param arg: 
+    :param arg:
 
     """
     arg = arg.replace("gcc", "g++", 1)
@@ -1126,8 +1126,8 @@ elif args["grav"] == "mg":
 def output_config(opt_descr, opt_choice, filehandle=None):
     """
 
-    :param opt_descr: 
-    :param opt_choice: 
+    :param opt_descr:
+    :param opt_choice:
     :param filehandle:  (Default value = None)
 
     """

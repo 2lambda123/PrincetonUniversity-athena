@@ -21,24 +21,24 @@
 ! frml: formular for reaction rates:
 ! 1: Cosmic-ray ionization (direct and undirect)
 ! 2: Photo-dissociation (Draine)
-! 3: Kooij 
-! 4: ionpol1 
-! 5: ionpol2 
+! 3: Kooij
+! 4: ionpol1
+! 5: ionpol2
 ! 6: Troe fall-off
 ! 7: customized
 ! ID: the number of reaction, the special rates are also set by this ID. ID has
 !     to be an unique integer (int type in c++), but doesn't have to match the number of the line or any order.
-! ni: the number of (alpha, beta, gamma) in the downloaded network when several values are present in KIDA. 
+! ni: the number of (alpha, beta, gamma) in the downloaded network when several values are present in KIDA.
 !
-! r: Recommendation is the recommendation given by experts in KIDA. 
-! 0: the value is not recommended. 
-! 1: means that there is no recommendation (experts have not looked at the data). 
+! r: Recommendation is the recommendation given by experts in KIDA.
+! 0: the value is not recommended.
+! 1: means that there is no recommendation (experts have not looked at the data).
 ! 2: means that the value has been validated by experts over the Trange
 ! 3: means that it is the recommended value over Trange.
 ! 4: other (set in code. alpha, beta and gamma are irrelevant in this case)
 !
 ! only columns starts with "*" is used in our program, the temperature range is extrapolated.
-!   *Reactants 3x(s10+' ') + ' ' *Products 5x(s10+' ') + 2x' '                            *alpha     *beta      *gamma     F        g      err *itype Tmin  Tmax *frml  *ID ni r 
+!   *Reactants 3x(s10+' ') + ' ' *Products 5x(s10+' ') + 2x' '                            *alpha     *beta      *gamma     F        g      err *itype Tmin  Tmax *frml  *ID ni r
 ! Gong, Ostriker and Wolfire (2017) network plus gas-phase H2 formation for low metallicity
 H          CR                     H+         e-                                            0.000e+00  0.000e+00  0.000e+00 2.00e+00 0.00e+00 logn  1  -9999   9999  7     1 1  1
 H2         CR                     H2+        e-                                            0.000e+00  0.000e+00  0.000e+00 2.00e+00 0.00e+00 logn  1  -9999   9999  7     2 1  1
@@ -114,5 +114,3 @@ H          H+                     H2+                                           
 H2+        CRP                    H          H+                                            1.220e+03  0.000e+00  0.000e+00 2.00e+00 0.00e+00 logn  2  -9999   9999  1    64 1  1
 H2+        Photon                 H          H+                                            5.700e-10  0.000e+00  2.780e+00 1.50e+00 0.00e+00 logn  3  -9999   9999  2    65 1  2
 H2+        e-                     H          H                                             1.590e-08 -1.180e+00  7.200e+00 1.25e+00 0.00e+00 logn  8     10   1000  3    66 1  1
-
-
